@@ -1,9 +1,15 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCeVWh34HE7GKBKi1FRBNaCa9_jmgLB580",
-  authDomain: "rtcretry-3d8ca.firebaseapp.com",
-  projectId: "rtcretry-3d8ca",
-  storageBucket: "rtcretry-3d8ca.appspot.com",
-  messagingSenderId: "456759284357",
-  appId: "1:456759284357:web:e02b184fb4e0588cd68fec",
-  measurementId: "G-HF63W4RN1R",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEYS,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIRESBASE_MESSAGING_SENDERID,
+  appId: import.meta.env.VITE_FIREBASE_APPID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID,
 };
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
