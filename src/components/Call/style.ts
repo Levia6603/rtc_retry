@@ -54,3 +54,16 @@ export const EnterPage = styled.div`
     }
   }
 `;
+
+export const CallPage = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+`;
+
+export const LocalUser = styled.video`
+  width: 400px;
+  height: 300px;
+`;
