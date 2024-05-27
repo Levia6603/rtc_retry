@@ -1,12 +1,61 @@
 import { useRef, useState } from "react";
-import { Container, Wrapper, EnterPage, CallPage, LocalUser } from "./style";
+import {
+  Container,
+  Wrapper,
+  EnterPage,
+  CallPage,
+  LocalUser,
+  Label,
+} from "./style";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../server/firebase";
+
+interface RefProps {
+  srcObject: MediaStream;
+}
 
 function Call() {
   const [state, setState] = useState(false);
-  const [id, setId] = useState("");
-  const localRef = useRef(null);
+  const [inputid, setInputId] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const localRef = useRef<RefProps>();
+  const remoteRef = useRef<RefProps>();
 
-  async function createRoom() {}
+  async function createRoom() {
+    setState(true);
+    const constants = { audio: true, video: true };
+    const mediaStream = await navigator.mediaDevices.getUserMedia(constants);
+    const remoteStream = new MediaStream();
+    const roomRef = await addDoc(collection(db, "rooms"), {});
+    setRoomId(roomRef.id);
+
+    if (localRef.current && mediaStream) {
+      localRef.current.srcObject = mediaStream;
+    }
+    if (remoteRef.current) {
+      remoteRef.current.srcObject = remoteStream;
+    }
+  }
+  async function copyText() {
+    await navigator.clipboard.writeText(roomId).then(() => {
+      alert("copy!!");
+    });
+  }
+  async function enterRoom(roomId: string) {
+    setState(true);
+    const constants = { audio: true, video: true };
+    const mediaStream = await navigator.mediaDevices.getUserMedia(constants);
+    const remoteStream = new MediaStream();
+    const roomRef = doc(db, "rooms", roomId);
+    const roomSnapshot = await getDoc(roomRef);
+
+    if (localRef.current && mediaStream) {
+      localRef.current.srcObject = mediaStream;
+    }
+    if (remoteRef.current) {
+      remoteRef.current.srcObject = remoteStream;
+    }
+  }
   return (
     <Wrapper>
       <Container>
@@ -16,15 +65,15 @@ function Call() {
             <label>
               <input
                 type="text"
-                value={id}
+                value={inputid}
                 onChange={(e) => {
-                  setId(e.target.value);
+                  setInputId(e.target.value);
                 }}
               />
               <button
                 type="button"
                 onClick={() => {
-                  setState(true);
+                  enterRoom(roomId);
                 }}
               >
                 Enter
@@ -43,6 +92,7 @@ function Call() {
               autoPlay
               playsInline
             />
+            <Label onClick={copyText}>{roomId}</Label>
           </CallPage>
         )}
       </Container>

@@ -56,14 +56,32 @@ export const EnterPage = styled.div`
 `;
 
 export const CallPage = styled.div`
+  position: relative;
   display: flex;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
   width: 100vw;
   height: 100vh;
+  padding: 40px;
   background-color: #000;
 `;
 
 export const LocalUser = styled.video`
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 10px #fff;
+  }
+`;
+
+export const Label = styled.p`
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
 `;
