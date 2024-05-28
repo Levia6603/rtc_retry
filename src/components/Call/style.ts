@@ -76,6 +76,16 @@ export const LocalUser = styled.video`
     box-shadow: 0 0 10px #fff;
   }
 `;
+export const RemoteUser = styled.video`
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 10px #fff;
+  }
+`;
 
 export const Label = styled.p`
   position: absolute;
